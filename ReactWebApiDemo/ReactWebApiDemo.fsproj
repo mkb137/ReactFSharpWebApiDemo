@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp2.0</TargetFramework>
+		<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include=".babelrc" />
+		<None Include="webpack.config.js" />
+		<Compile Include="Controllers/ValuesController.fs" />
+		<Compile Include="Startup.fs" />
+		<Compile Include="Program.fs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Remove="wwwroot\js\AppTS.tsx" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <TypeScriptCompile Include="wwwroot\js\AppTS.tsx" />
+	</ItemGroup>
+
+	<Target Name="WebpackDebug" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug'">
+		<Message Importance="high" Text="Performing webpack build (Debug)..." />
+		<Exec Command="npm run debug" />
+	</Target>
+
+	<Target Name="WebpackRelease" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Release'">
+		<Message Importance="high" Text="Performing webpack build (Release)..." />
+		<Exec Command="npm run release" />
+	</Target>
+
+</Project>
